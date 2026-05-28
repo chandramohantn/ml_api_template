@@ -1,4 +1,37 @@
-# Learning Session — ML API Template Deep Dive
+# Learning Session
+
+## Table of Contents
+
+1. [What is the need for lockfiles in Python packaging?](#1-what-is-the-need-for-lockfiles-in-python-packaging-what-happens-if-i-edit-it)
+2. [What is the need for using Pydantic?](#2-what-is-the-need-for-using-pydantic)
+3. [Difference between uvicorn, gunicorn, Flask, and FastAPI](#3-difference-between-uvicorn-gunicorn-flask-and-fastapi)
+4. [What is the advantage of using a Makefile?](#4-what-is-the-advantage-of-using-a-makefile)
+5. [What is tracing with OpenTelemetry? What is distributed tracing?](#5-what-is-tracing-with-opentelemetry-what-is-distributed-tracing)
+6. [How is testing done for API endpoints with transport, service, inference, and infra layers?](#6-how-is-testing-done-for-api-endpoints-with-transport-service-inference-and-infra-layers)
+7. [What are health endpoints? Why /health/live and /health/ready?](#7-what-are-health-endpoints-why-healthlive-and-healthready)
+8. [Do all core modules (config, logging, lifespan) need to be imported in main.py?](#8-do-all-core-modules-config-logging-lifespan-need-to-be-imported-in-mainpy)
+9. [What is optional-dependencies in pyproject.toml? Can I mix and match?](#9-what-is-optional-dependencies-in-pyprojecttoml-can-i-mix-and-match)
+10. [What does uv sync --extra dev --extra ml do?](#10-what-does-uv-sync---extra-dev---extra-ml-do)
+11. [What does uv run uvicorn app.main:app --reload mean?](#11-what-does-uv-run-uvicorn-appmainapp---reload-mean)
+12. [Is uv.lock the same as any other lockfile?](#12-is-uvlock-the-same-as-any-other-lockfile)
+13. [If I change requires-python, will uv handle dependency versions automatically?](#13-if-i-change-requires-python-will-uv-handle-dependency-versions-automatically)
+14. [What is the [project] section in pyproject.toml?](#14-what-is-the-project-section-in-pyprojecttoml)
+15. [When I add or remove a library with uv, does uv.lock get updated?](#15-when-i-add-or-remove-a-library-with-uv-does-uvlock-get-updated)
+16. [What does .PHONY do in a Makefile?](#16-what-does-phony-do-in-a-makefile)
+17. [Can I run uvicorn on any IP and port?](#17-can-i-run-uvicorn-on-any-ip-and-port)
+18. [Why is logging.basicConfig() in setup_logging() but not added to structlog?](#18-why-is-loggingbasicconfig-in-setup_logging-but-not-added-to-structlog)
+19. [What is class Config inside Pydantic models? What about ORM mode?](#19-what-is-class-config-inside-pydantic-models-what-about-orm-mode)
+20. [What does @asynccontextmanager do? Why is it needed?](#20-what-does-asynccontextmanager-do-why-is-it-needed)
+21. [What is FastAPI's app.state? Why do we use it?](#21-what-is-fastapis-appstate-why-do-we-use-it)
+22. [Should config/settings be initialized in the lifespan function?](#22-should-configsettings-be-initialized-in-the-lifespan-function)
+23. [How is middleware used for authentication and authorization?](#23-how-is-middleware-used-for-authentication-and-authorization)
+24. [Should middleware logic be tested? How?](#24-should-middleware-logic-be-tested-how)
+25. [Should lifespan logic be tested? How?](#25-should-lifespan-logic-be-tested-how)
+26. [What are redoc_url and openapi_url in FastAPI?](#26-what-are-redoc_url-and-openapi_url-in-fastapi)
+27. [What is CORSMiddleware?](#27-what-is-corsmiddleware)
+28. [How is docker-compose handled in production? What if one service fails?](#28-how-is-docker-compose-handled-in-production-what-if-one-service-fails)
+29. [Follow-up: Does stdlib log_level suppress structlog INFO events?](#follow-up-does-stdlib-log_level-suppress-structlog-info-events)
+30. [Follow-up: What happens in Docker when .env doesn't exist?](#follow-up-what-happens-in-docker-when-env-doesnt-exist)
 
 ---
 
